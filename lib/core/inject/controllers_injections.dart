@@ -5,4 +5,5 @@ registerControllerDependencies(GetIt getIt) {
   getIt.registerLazySingleton<HomeController>(
     () => HomeController(),
   );
+ 
 }

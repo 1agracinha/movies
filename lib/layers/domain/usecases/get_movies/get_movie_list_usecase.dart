@@ -5,6 +5,7 @@ import 'package:movies/layers/helpers/errors/domain_error.dart';
 abstract class GetMovieListUsecase {
   Future<Either<DomainError, List<MovieEntity>>> call({
     int? genreId,
-    int? releaseYear
+    int? releaseYear,
+    int? page
   });
 }

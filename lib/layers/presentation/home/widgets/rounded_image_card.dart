@@ -4,11 +4,10 @@ import 'package:movies/core/utils/spacing_constants.dart';
 class RoundedImageCard extends StatefulWidget {
   final bool isActive;
   final String imageUrl;
-  const RoundedImageCard({
-    Key? key,
-    required this.isActive,
-    required this.imageUrl,
-  }) : super(key: key);
+  final EdgeInsets? margin;
+  const RoundedImageCard(
+      {Key? key, required this.isActive, required this.imageUrl, this.margin})
+      : super(key: key);
 
   @override
   State<RoundedImageCard> createState() => _RoundedImageCardState();
@@ -21,11 +20,12 @@ class _RoundedImageCardState extends State<RoundedImageCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeOutQuint,
-        margin: EdgeInsets.only(
-          top: widget.isActive ? 0 : smSpacing,
-          bottom: normalSpacing,
-          right: normalSpacing,
-        ),
+        margin: widget.margin ??
+            EdgeInsets.only(
+              top: widget.isActive ? 0 : smSpacing,
+              bottom: normalSpacing,
+              right: normalSpacing,
+            ),
         decoration: getBoxDecoration,
       ),
     );

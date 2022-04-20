@@ -12,14 +12,18 @@ class MovieDatasourceImp implements MovieDatasource {
   MovieDatasourceImp(this.client);
 
   @override
-  Future<List<MovieEntity>> getMovieList(
-      {int? genreId, int? releaseYear}) async {
+  Future<List<MovieEntity>> getMovieList({
+    int? genreId,
+    int? releaseYear,
+    int? page,
+  }) async {
     try {
       const url = '/discover/movie';
       final response = await client.get(url, query: {
         'with_genres': genreId,
         'language': 'pt-BR',
-        'primary_release_year': releaseYear
+        'primary_release_year': releaseYear,
+        'page': page
       });
       final movies = response.data['results'];
 

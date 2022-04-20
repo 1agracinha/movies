@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:movies/layers/domain/entities/movie_entity.dart';
 import 'package:movies/layers/presentation/home/widgets/rounded_image_card.dart';
 import 'package:movies/layers/presentation/movie_details/movie_detail_page.dart';

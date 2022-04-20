@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:movies/layers/domain/entities/genre_entity.dart';
@@ -9,7 +10,7 @@ part 'home_controller.g.dart';
 
 class HomeController = HomeControllerBase with _$HomeController;
 
-enum ViewState { start, loading, done, error }
+enum ViewState { start, loading, done, error, loadingNewData }
 
 abstract class HomeControllerBase with Store {
   GetMovieListUsecase getMovieListUsecase = GetIt.I.get<GetMovieListUsecase>();
@@ -30,7 +31,7 @@ abstract class HomeControllerBase with Store {
   String? selectedGenreName;
 
   @observable
-  List<MovieEntity>? movieList;
+  ObservableList<MovieEntity> movieList = ObservableList();
 
   @observable
   List<MovieEntity>? currentYearMovieList;
@@ -40,14 +41,18 @@ abstract class HomeControllerBase with Store {
 
   @action
   Future<void> setMovieList() async {
-    viewState = ViewState.loading;
-    final response = await getMovieListUsecase.call(genreId: selectedGenreId);
+    if (viewState != ViewState.loading) {
+      viewState = ViewState.loading;
+    }
+    final response =
+        await getMovieListUsecase.call(genreId: selectedGenreId, page: page);
     response.fold(
       (l) {
         viewState = ViewState.error;
       },
       (r) {
-        movieList = r;
+        movieList.addAll(r);
+        print(movieList.length);
         viewState = ViewState.done;
       },
     );
@@ -90,9 +95,7 @@ abstract class HomeControllerBase with Store {
   Future<void> setMoviesByGenreAndReleaseYear() async {
     viewState = ViewState.loading;
     final response = await getMovieListUsecase.call(
-      genreId: selectedGenreId,
-      releaseYear: currentYear,
-    );
+        genreId: selectedGenreId, releaseYear: currentYear, page: page);
     response.fold(
       (l) {
         viewState = ViewState.error;
@@ -102,5 +105,33 @@ abstract class HomeControllerBase with Store {
         viewState = ViewState.done;
       },
     );
+  }
+
+  @observable
+  bool hasMoreItems = true;
+
+  @observable
+  bool scrolled = false;
+
+  @observable
+  int page = 1;
+
+  @action
+  void updateOnScroll(ScrollController scrollController) {
+    if (scrollController.position.atEdge) {
+      if (scrollController.position.pixels != 0) {
+        if (hasMoreItems && !scrolled) {
+          setMoreMovies();
+        } else {
+          scrolled = false;
+        }
+      }
+    }
+  }
+
+  Future<void> setMoreMovies() async {
+    viewState = ViewState.loadingNewData;
+    page += 1;
+    await setMovieList();
   }
 }

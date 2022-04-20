@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
 import 'package:movies/layers/domain/entities/genre_entity.dart';
 import 'package:movies/layers/presentation/home/controller/home_controller.dart';
+import 'package:movies/layers/presentation/home/widgets/custom_elevated_button_widget.dart';
 
-import 'package:movies/layers/presentation/home/widgets/custom_elevated_button.dart';
 
 class CategoryListWidget extends StatelessWidget {
   final int? itemCount;
@@ -28,7 +28,7 @@ class CategoryListWidget extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: itemCount ?? genreList.length,
         padding: const EdgeInsets.symmetric(horizontal: smSpacing),
-        itemBuilder: (context, index) => CustomElevatedButton(
+        itemBuilder: (context, index) => CustomElevatedButtonWidget(
           text: getText(index),
           isActive: genreList.isNotEmpty ? isActive(index) : false,
           onPressed: () {

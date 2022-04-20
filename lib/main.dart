@@ -5,6 +5,7 @@ import 'package:movies/core/inject/inject_container.dart';
 import 'package:movies/core/utils/assets_constants.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
 import 'package:movies/layers/presentation/home/home_page.dart';
+import 'package:movies/layers/presentation/shared/widgets/custom_appbar_widget.dart';
 
 void main() async {
   Inject.init();
@@ -26,7 +27,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      
     );
   }
 }
@@ -43,21 +43,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Center(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(top: mdSpacing, bottom: normalSpacing),
-              child: Image.asset(
-                ImageAssets.logo,
-                scale: 8,
-              ),
-            ),
-          ),
-        ),
-        body: const SafeArea(child: HomePage()));
+    return const Scaffold(
+      appBar: CustomAppBarWidget(),
+      body: SafeArea(
+        child: HomePage(),
+      ),
+    );
   }
 }
