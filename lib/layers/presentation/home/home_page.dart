@@ -29,8 +29,18 @@ class _HomePageState extends State<HomePage> {
       if (homeController.viewState == ViewState.loading) {
         return const HomePageShimmer();
       } else if (homeController.viewState == ViewState.error) {
-        return const Center(
-          child: Text('error'),
+        return Center(
+          child: Column(
+            children: [
+              const Text('error'),
+              TextButton(
+                onPressed: () {
+                  homeController.loadHomePageData();
+                },
+                child: const Text('Tentar Novamente'),
+              )
+            ],
+          ),
         );
       } else if (homeController.movieList == null ||
           homeController.currentYearMovieList == null) {
