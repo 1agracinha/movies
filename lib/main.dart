@@ -57,6 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        body: SafeArea(child: HomePage()));
+        body: const SafeArea(child: HomePage()));
   }
 }

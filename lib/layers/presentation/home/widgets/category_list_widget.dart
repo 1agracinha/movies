@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
+import 'package:movies/layers/domain/entities/genre_entity.dart';
 import 'package:movies/layers/domain/entities/movie_entity.dart';
 import 'package:movies/layers/presentation/home/widgets/custom_elevated_button.dart';
 
 class CategoryListWidget extends StatelessWidget {
   final int? itemCount;
-  final List<MovieEntity> movieList;
+  final List<GenreEntity> genreList;
   const CategoryListWidget({
     Key? key,
-    required this.movieList,
+    required this.genreList,
     this.itemCount,
   }) : super(key: key);
 
@@ -21,7 +22,7 @@ class CategoryListWidget extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        itemCount: itemCount ?? movieList.length,
+        itemCount: itemCount ?? genreList.length,
         padding: const EdgeInsets.symmetric(horizontal: smSpacing),
         itemBuilder: (context, index) => CustomElevatedButton(
           text: getText(index),
@@ -33,5 +34,5 @@ class CategoryListWidget extends StatelessWidget {
   }
 
   String getText(int index) =>
-      movieList.isNotEmpty ? movieList[index].title : '';
+      genreList.isNotEmpty ? genreList[index].name : '';
 }

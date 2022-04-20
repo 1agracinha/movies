@@ -20,7 +20,7 @@ class HomePageView extends StatelessWidget {
           onTapViewAll: () {},
         ),
         CategoryListWidget(
-          movieList: homeController.movieList ?? [],
+          genreList: homeController.genreList ?? [],
         ),
         Padding(
           padding: const EdgeInsets.only(left: normalSpacing),

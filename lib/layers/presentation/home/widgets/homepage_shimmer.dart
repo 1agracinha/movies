@@ -37,7 +37,7 @@ class _HomePageShimmerState extends State<HomePageShimmer> {
         ),
         customShimmer(
           const CategoryListWidget(
-            movieList: [],
+            genreList: [],
             itemCount: 8,
           ),
         ),
