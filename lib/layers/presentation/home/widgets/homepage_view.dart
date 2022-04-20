@@ -19,7 +19,14 @@ class HomePageView extends StatelessWidget {
       child: Column(children: [
         CategorySectionWidget(
           sectionName: 'Explore por gêneros',
-          onTapViewAll: () {},
+          onTapViewAll: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: ((context) => const MovieListPage()),
+              ),
+            );
+          },
         ),
         CategoryListWidget(
           genreList: homeController.genreList ?? [],
@@ -34,14 +41,7 @@ class HomePageView extends StatelessWidget {
         CategorySectionWidget(
           sectionName:
               'Filmes de ${homeController.selectedGenreName} lançados em ${homeController.currentYear}',
-          onTapViewAll: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: ((context) => const MovieListPage()),
-              ),
-            );
-          },
+          onTapViewAll: () {},
         ),
         Padding(
           padding: const EdgeInsets.only(left: normalSpacing),

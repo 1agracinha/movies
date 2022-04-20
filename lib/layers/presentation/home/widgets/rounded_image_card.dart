@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/core/utils/assets_constants.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
 
 class RoundedImageCard extends StatefulWidget {
@@ -37,7 +38,9 @@ class _RoundedImageCardState extends State<RoundedImageCard> {
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: NetworkImage(widget.imageUrl),
+            image: widget.imageUrl.isNotEmpty
+                ? NetworkImage(widget.imageUrl)
+                : const AssetImage(ImageAssets.noImage) as ImageProvider,
           ),
           boxShadow: [getBoxShadow])
       : const BoxDecoration(color: Colors.red);
