@@ -41,7 +41,7 @@ abstract class HomeControllerBase with Store {
 
   @action
   Future<void> setMovieList() async {
-    if (viewState != ViewState.loading) {
+    if (viewState != ViewState.loadingNewData) {
       viewState = ViewState.loading;
     }
     final response =
@@ -51,8 +51,13 @@ abstract class HomeControllerBase with Store {
         viewState = ViewState.error;
       },
       (r) {
+        if (r.isEmpty) {
+          hasMoreItems = false;
+        }
+        if (isANewSelectedGenrer) {
+          movieList.clear();
+        }
         movieList.addAll(r);
-        print(movieList.length);
         viewState = ViewState.done;
       },
     );
@@ -83,11 +88,19 @@ abstract class HomeControllerBase with Store {
     });
   }
 
+  @observable
+  bool isANewSelectedGenrer = false;
+
   @action
   Future<void> updateGenreMovieList(GenreEntity genreEntity) async {
+    if (selectedGenreId != genreEntity.id) {
+      isANewSelectedGenrer = true;
+    } else {
+      isANewSelectedGenrer = false;
+    }
     selectedGenreId = genreEntity.id;
     selectedGenreName = genreEntity.name;
-    setMovieList();
+    await setMovieList();
     setMoviesByGenreAndReleaseYear();
   }
 
@@ -111,27 +124,16 @@ abstract class HomeControllerBase with Store {
   bool hasMoreItems = true;
 
   @observable
-  bool scrolled = false;
-
-  @observable
   int page = 1;
 
   @action
-  void updateOnScroll(ScrollController scrollController) {
-    if (scrollController.position.atEdge) {
-      if (scrollController.position.pixels != 0) {
-        if (hasMoreItems && !scrolled) {
-          setMoreMovies();
-        } else {
-          scrolled = false;
-        }
-      }
-    }
-  }
-
   Future<void> setMoreMovies() async {
     viewState = ViewState.loadingNewData;
-    page += 1;
+    if (isANewSelectedGenrer) {
+      page = 1;
+    } else {
+      page += 1;
+    }
     await setMovieList();
   }
 }

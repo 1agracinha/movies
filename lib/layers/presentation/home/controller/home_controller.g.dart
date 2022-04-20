@@ -118,6 +118,23 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
+  final _$isANewSelectedGenrerAtom =
+      Atom(name: 'HomeControllerBase.isANewSelectedGenrer');
+
+  @override
+  bool get isANewSelectedGenrer {
+    _$isANewSelectedGenrerAtom.reportRead();
+    return super.isANewSelectedGenrer;
+  }
+
+  @override
+  set isANewSelectedGenrer(bool value) {
+    _$isANewSelectedGenrerAtom.reportWrite(value, super.isANewSelectedGenrer,
+        () {
+      super.isANewSelectedGenrer = value;
+    });
+  }
+
   final _$hasMoreItemsAtom = Atom(name: 'HomeControllerBase.hasMoreItems');
 
   @override
@@ -130,21 +147,6 @@ mixin _$HomeController on HomeControllerBase, Store {
   set hasMoreItems(bool value) {
     _$hasMoreItemsAtom.reportWrite(value, super.hasMoreItems, () {
       super.hasMoreItems = value;
-    });
-  }
-
-  final _$scrolledAtom = Atom(name: 'HomeControllerBase.scrolled');
-
-  @override
-  bool get scrolled {
-    _$scrolledAtom.reportRead();
-    return super.scrolled;
-  }
-
-  @override
-  set scrolled(bool value) {
-    _$scrolledAtom.reportWrite(value, super.scrolled, () {
-      super.scrolled = value;
     });
   }
 
@@ -205,18 +207,12 @@ mixin _$HomeController on HomeControllerBase, Store {
         .run(() => super.setMoviesByGenreAndReleaseYear());
   }
 
-  final _$HomeControllerBaseActionController =
-      ActionController(name: 'HomeControllerBase');
+  final _$setMoreMoviesAsyncAction =
+      AsyncAction('HomeControllerBase.setMoreMovies');
 
   @override
-  void updateOnScroll(ScrollController scrollController) {
-    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.updateOnScroll');
-    try {
-      return super.updateOnScroll(scrollController);
-    } finally {
-      _$HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> setMoreMovies() {
+    return _$setMoreMoviesAsyncAction.run(() => super.setMoreMovies());
   }
 
   @override
@@ -229,8 +225,8 @@ selectedGenreName: ${selectedGenreName},
 movieList: ${movieList},
 currentYearMovieList: ${currentYearMovieList},
 genreList: ${genreList},
+isANewSelectedGenrer: ${isANewSelectedGenrer},
 hasMoreItems: ${hasMoreItems},
-scrolled: ${scrolled},
 page: ${page}
     ''';
   }

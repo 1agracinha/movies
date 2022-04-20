@@ -5,9 +5,9 @@ import 'package:movies/core/utils/spacing_constants.dart';
 import 'package:movies/layers/domain/entities/movie_entity.dart';
 import 'package:movies/layers/presentation/home/controller/home_controller.dart';
 import 'package:movies/layers/presentation/home/widgets/category_list_widget.dart';
+import 'package:movies/layers/presentation/home/widgets/custom_elevated_button_widget.dart';
 import 'package:movies/layers/presentation/home/widgets/rounded_image_card.dart';
 import 'package:movies/layers/presentation/movie_details/widgets/back_button_widget.dart';
-import 'package:movies/layers/presentation/shared/widgets/custom_appbar_widget.dart';
 
 class MovieListPage extends StatefulWidget {
   const MovieListPage({Key? key}) : super(key: key);
@@ -17,79 +17,82 @@ class MovieListPage extends StatefulWidget {
 }
 
 class _MovieListPageState extends State<MovieListPage> {
-  final ScrollController _scrollController = ScrollController();
-
   final HomeController homeController = GetIt.I.get<HomeController>();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(
-      () => homeController.updateOnScroll(_scrollController),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Observer(
-              builder: (context) {
-                if ([homeController.movieList].isEmpty) {
-                  return const Center(
-                    child: Text('no content'),
-                  );
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: smSpacing,
-                          top: smSpacing,
-                          left: normalSpacing,
-                        ),
-                        child: BackButtonWidget(),
-                      ),
+        child: Observer(
+          builder: (context) {
+            if (homeController.movieList.isEmpty) {
+              return const Center(
+                child: Text('no content'),
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: smSpacing,
+                      top: smSpacing,
+                      left: normalSpacing,
                     ),
-                    CategoryListWidget(
-                        genreList: homeController.genreList ?? []),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: homeController.movieList
-                          .map(
-                            (movie) => SizedBox(
-                              height: 200,
-                              width: double.infinity,
-                              child: RoundedImageCard(
-                                isActive: false,
-                                imageUrl: getImageUrl(movie),
-                                margin: const EdgeInsets.all(smSpacing),
-                              ),
+                    child: BackButtonWidget(),
+                  ),
+                ),
+                CategoryListWidget(genreList: homeController.genreList ?? []),
+                Observer(builder: (context) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ...homeController.movieList
+                              .map(
+                                (movie) => Builder(builder: (context) {
+                                  return SizedBox(
+                                    height: 200,
+                                    width: double.infinity,
+                                    child: RoundedImageCard(
+                                      isActive: false,
+                                      imageUrl: getImageUrl(movie),
+                                      margin: const EdgeInsets.all(smSpacing),
+                                    ),
+                                  );
+                                }),
+                              )
+                              .toList(),
+                          Visibility(
+                            visible: homeController.hasMoreItems,
+                            child: CustomElevatedButtonWidget(
+                              text: 'Ver mais',
+                              onPressed: () {
+                                homeController.setMoreMovies();
+                              },
+                            ),
+                            replacement: const Text(
+                              'Não há mais títulos a serem carregados',
                             ),
                           )
-                          .toList(),
-                    ),
-                    Visibility(
-                      visible:
-                          homeController.viewState == ViewState.loadingNewData,
-                      child: Center(
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          margin: const EdgeInsets.all(smSpacing),
-                          child: const CircularProgressIndicator(),
-                        ),
+                        ],
                       ),
-                    )
-                  ],
-                );
-              },
-            )),
+                    ),
+                  );
+                }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
