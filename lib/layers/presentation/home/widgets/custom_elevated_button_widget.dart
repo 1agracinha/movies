@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
 
-class CustomElevatedButton extends StatelessWidget {
+class CustomElevatedButtonWidget extends StatelessWidget {
   final String text;
   final Function onPressed;
   final bool isActive;
-  const CustomElevatedButton({
+  const CustomElevatedButtonWidget({
     Key? key,
     required this.text,
     required this.onPressed,

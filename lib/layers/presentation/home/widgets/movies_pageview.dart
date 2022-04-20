@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/layers/domain/entities/movie_entity.dart';
 import 'package:movies/layers/presentation/home/widgets/rounded_image_card.dart';
+import 'package:movies/layers/presentation/movie_details/movie_detail_page.dart';
 
 class MoviesPageView extends StatefulWidget {
   final double? height;
@@ -60,9 +62,20 @@ class _MoviesPageViewState extends State<MoviesPageView> {
         itemCount: widget.itemCount ?? widget.movies.length,
         itemBuilder: (context, int index) {
           active = index == currentPage;
-          return RoundedImageCard(
-            isActive: hasFocus(active),
-            imageUrl: getImageUrl(index),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: ((context) =>
+                      MovieDetailPage(movieEntity: widget.movies[index])),
+                ),
+              );
+            },
+            child: RoundedImageCard(
+              isActive: hasFocus(active),
+              imageUrl: getImageUrl(index),
+            ),
           );
         },
       ),
