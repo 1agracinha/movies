@@ -30,7 +30,8 @@ class HomePageView extends StatelessWidget {
           ),
         ),
         CategorySectionWidget(
-          sectionName: '${homeController.selectedGenreName} lançado em 2022',
+          sectionName:
+              'Filmes de ${homeController.selectedGenreName} lançado em ${homeController.currentYear}',
           onTapViewAll: () {},
         ),
         Padding(
@@ -38,7 +39,7 @@ class HomePageView extends StatelessWidget {
           child: MoviesPageView(
             height: MediaQuery.of(context).size.height * 0.22,
             viewportFraction: 0.36,
-            movies: homeController.movieList!,
+            movies: homeController.currentYearMovieList!,
           ),
         ),
       ]),

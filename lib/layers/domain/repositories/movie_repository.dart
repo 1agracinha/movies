@@ -6,6 +6,7 @@ import 'package:movies/layers/helpers/errors/domain_error.dart';
 abstract class MovieRepository {
   Future<Either<DomainError, List<MovieEntity>>> getMovieList({
     int? genreId,
+    int? releaseYear
   });
   Future<Either<DomainError, List<GenreEntity>>> getGenreList();
 }

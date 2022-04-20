@@ -32,7 +32,8 @@ class _HomePageState extends State<HomePage> {
         return const Center(
           child: Text('error'),
         );
-      } else if (homeController.movieList == null) {
+      } else if (homeController.movieList == null ||
+          homeController.currentYearMovieList == null) {
         return const Center(
           child: Text('no content'),
         );

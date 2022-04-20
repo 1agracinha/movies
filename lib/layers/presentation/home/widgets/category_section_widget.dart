@@ -18,15 +18,19 @@ class CategorySectionWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: normalSpacing, right: smSpacing),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                sectionName,
-                style: const TextStyle(fontSize: 22),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  sectionName,
+                  style: const TextStyle(fontSize: 22),
+                ),
               ),
               TextButton(
                 style: ButtonStyle(
-                  overlayColor:
-                      MaterialStateColor.resolveWith((states) => Colors.red.withOpacity(0.2)),
+                  overlayColor: MaterialStateColor.resolveWith(
+                      (states) => Colors.red.withOpacity(0.2)),
                 ),
                 child: const Text(
                   'view all',
