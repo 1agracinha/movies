@@ -30,7 +30,7 @@ class HomePageView extends StatelessWidget {
           ),
         ),
         CategorySectionWidget(
-          sectionName: 'Drama lançado em 2022',
+          sectionName: '${homeController.selectedGenreName} lançado em 2022',
           onTapViewAll: () {},
         ),
         Padding(

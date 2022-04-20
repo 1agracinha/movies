@@ -36,8 +36,8 @@ class _HomePageShimmerState extends State<HomePageShimmer> {
           onTapViewAll: () {},
         ),
         customShimmer(
-          const CategoryListWidget(
-            genreList: [],
+          CategoryListWidget(
+            genreList: const [],
             itemCount: 8,
           ),
         ),

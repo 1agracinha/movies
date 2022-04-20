@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:movies/core/utils/spacing_constants.dart';
 import 'package:movies/layers/domain/entities/genre_entity.dart';
-import 'package:movies/layers/domain/entities/movie_entity.dart';
+import 'package:movies/layers/presentation/home/controller/home_controller.dart';
+
 import 'package:movies/layers/presentation/home/widgets/custom_elevated_button.dart';
 
 class CategoryListWidget extends StatelessWidget {
   final int? itemCount;
   final List<GenreEntity> genreList;
-  const CategoryListWidget({
+  final HomeController homeController = GetIt.I.get<HomeController>();
+
+  CategoryListWidget({
     Key? key,
     required this.genreList,
     this.itemCount,
@@ -26,12 +30,21 @@ class CategoryListWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: smSpacing),
         itemBuilder: (context, index) => CustomElevatedButton(
           text: getText(index),
-          isActive: index == 0,
-          onPressed: () {},
+          isActive: genreList.isNotEmpty ? isActive(index) : false,
+          onPressed: () {
+            homeController.updateGenreMovieList(genreList[index]);
+          },
         ),
       ),
     );
   }
+
+  bool isActive(int index) =>
+      index ==
+      genreList.indexOf(
+        genreList
+            .firstWhere((genre) => genre.id == homeController.selectedGenreId),
+      );
 
   String getText(int index) =>
       genreList.isNotEmpty ? genreList[index].name : '';

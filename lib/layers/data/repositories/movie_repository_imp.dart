@@ -14,11 +14,11 @@ class MovieRepositoryImp implements MovieRepository {
 
   @override
   Future<Either<DomainError, List<MovieEntity>>> getMovieList({
-    int page = 0,
+    int? genreId,
   }) async {
     try {
       if (await netWorkInfo.isConnected) {
-        final result = await movieDatasource.getMovieList(page: page);
+        final result = await movieDatasource.getMovieList(genreId: genreId);
         return Right(result);
       } else {
         return const Left(DomainError.noInternet);

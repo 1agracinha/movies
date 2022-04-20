@@ -20,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    homeController.setMovieList();
-    homeController.setGenreList();
+    homeController.loadHomePageData();
   }
 
   @override

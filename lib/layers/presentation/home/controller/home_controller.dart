@@ -23,6 +23,12 @@ abstract class HomeControllerBase with Store {
   int currentPage = 1;
 
   @observable
+  int? selectedGenreId;
+
+  @observable
+  String? selectedGenreName;
+
+  @observable
   List<MovieEntity>? movieList;
 
   @observable
@@ -31,11 +37,10 @@ abstract class HomeControllerBase with Store {
   @action
   Future<void> setMovieList() async {
     viewState = ViewState.loading;
-    final response = await getMovieListUsecase.call(page: currentPage);
+    final response = await getMovieListUsecase.call(genreId: selectedGenreId);
     response.fold(
       (l) {
         viewState = ViewState.error;
-        print(l);
       },
       (r) {
         movieList = r;
@@ -51,12 +56,27 @@ abstract class HomeControllerBase with Store {
     response.fold(
       (l) {
         viewState = ViewState.error;
-        print(l);
       },
       (r) {
         genreList = r;
+        selectedGenreId = r[0].id;
+        selectedGenreName = r[0].name;
         viewState = ViewState.done;
       },
     );
+  }
+
+  @action
+  Future<void> loadHomePageData() async {
+    await setGenreList().then((value) {
+      setMovieList();
+    });
+  }
+
+  @action
+  Future<void> updateGenreMovieList(GenreEntity genreEntity) async {
+    selectedGenreId = genreEntity.id;
+    selectedGenreName = genreEntity.name;
+    setMovieList();
   }
 }

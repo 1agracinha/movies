@@ -5,7 +5,7 @@ class MovieDto {
   final String title;
   final String overview;
   final String posterPath;
-  final String backdropPath;
+  final String? backdropPath;
   final num voteAverage;
 
   MovieDto({
@@ -13,8 +13,8 @@ class MovieDto {
     required this.title,
     required this.overview,
     required this.posterPath,
-    required this.backdropPath,
     required this.voteAverage,
+    this.backdropPath,
   });
 
   MovieEntity toEntity() => MovieEntity(
@@ -29,7 +29,7 @@ class MovieDto {
         id: entity.id,
         title: entity.title,
         overview: entity.overview,
-        backdropPath: entity.backdropPath,
+        backdropPath: entity.backdropPath ?? '',
         posterPath: entity.posterPath,
         voteAverage: entity.voteAverage,
       );

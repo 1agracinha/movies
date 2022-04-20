@@ -9,8 +9,8 @@ class GetMovieListUsecaseImp implements GetMovieListUsecase {
   GetMovieListUsecaseImp(this.repository);
   @override
   Future<Either<DomainError, List<MovieEntity>>> call({
-    int page = 0,
+    int? genreId,
   }) async {
-    return await repository.getMovieList(page: page);
+    return await repository.getMovieList(genreId: genreId);
   }
 }

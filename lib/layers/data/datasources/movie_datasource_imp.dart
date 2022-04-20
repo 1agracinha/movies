@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movies/infra/http/http_client.dart';
 import 'package:movies/layers/data/datasources/movie_datasource.dart';
 import 'package:movies/layers/data/dtos/genrer_dto.dart';
@@ -13,10 +12,11 @@ class MovieDatasourceImp implements MovieDatasource {
   MovieDatasourceImp(this.client);
 
   @override
-  Future<List<MovieEntity>> getMovieList({required int page}) async {
+  Future<List<MovieEntity>> getMovieList({required int? genreId}) async {
     try {
-      final url = '/discover/movie?page=$page';
-      final response = await client.get(url);
+      const url = '/discover/movie';
+      final response = await client
+          .get(url, query: {'with_genres': genreId, 'language': 'pt-BR'});
       final movies = response.data['results'];
 
       return MovieDto.fromJsonList(movies);
@@ -33,7 +33,7 @@ class MovieDatasourceImp implements MovieDatasource {
   Future<List<GenreEntity>> getGenreList() async {
     try {
       const url = '/genre/movie/list';
-      final response = await client.get(url);
+      final response = await client.get(url, query: {'language': 'pt-BR'});
       final genres = response.data['genres'];
 
       return GenrerDto.fromJsonList(genres);

@@ -3,7 +3,7 @@ class MovieEntity {
   final String title;
   final String overview;
   final String posterPath;
-  final String backdropPath;
+  final String? backdropPath;
   final num voteAverage;
 
   MovieEntity({
@@ -11,7 +11,7 @@ class MovieEntity {
     required this.title,
     required this.overview,
     required this.posterPath,
-    required this.backdropPath,
     required this.voteAverage,
+    this.backdropPath,
   });
 }
