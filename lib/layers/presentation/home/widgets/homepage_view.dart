@@ -31,7 +31,7 @@ class HomePageView extends StatelessWidget {
         ),
         CategorySectionWidget(
           sectionName:
-              'Filmes de ${homeController.selectedGenreName} lançado em ${homeController.currentYear}',
+              'Filmes de ${homeController.selectedGenreName} lançados em ${homeController.currentYear}',
           onTapViewAll: () {},
         ),
         Padding(

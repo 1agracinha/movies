@@ -4,10 +4,12 @@ class GenrerDto {
   final int id;
   final String name;
   const GenrerDto({required this.id, required this.name});
+
   GenreEntity toEntity() => GenreEntity(
         id: id,
         name: name,
       );
+      
   factory GenrerDto.fromJson(Map<String, dynamic> json) => GenrerDto(
         id: json['id'],
         name: json['name'],

@@ -4,7 +4,7 @@ class MovieDto {
   final int id;
   final String title;
   final String overview;
-  final String posterPath;
+  final String? posterPath;
   final String? backdropPath;
   final num voteAverage;
 
@@ -12,8 +12,8 @@ class MovieDto {
     required this.id,
     required this.title,
     required this.overview,
-    required this.posterPath,
     required this.voteAverage,
+    this.posterPath,
     this.backdropPath,
   });
 
@@ -22,7 +22,7 @@ class MovieDto {
         title: title,
         overview: overview,
         backdropPath: backdropPath,
-        posterPath: posterPath,
+        posterPath: posterPath ?? '',
         voteAverage: voteAverage,
       );
   factory MovieDto.fromEntity(MovieEntity entity) => MovieDto(
