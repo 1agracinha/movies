@@ -17,30 +17,43 @@ class CustomElevatedButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onPressed(),
       child: Container(
-        width: 64,
+        padding: const EdgeInsets.symmetric(
+          horizontal: normalSpacing,
+          vertical: smSpacing,
+        ),
         margin: const EdgeInsets.only(
-            right: smSpacing, top: smSpacing, bottom: smSpacing),
+          right: smSpacing,
+          top: smSpacing,
+          bottom: smSpacing,
+        ),
         decoration: BoxDecoration(
-          color: isActive ? Color.fromARGB(255, 72, 0, 130) : Colors.white,
-          borderRadius: BorderRadius.circular(6),
-          boxShadow: isActive
-              ? [
-                  BoxShadow(
-                      color: Color.fromARGB(255, 72, 0, 130).withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 1))
-                ]
-              : [
-                  BoxShadow(spreadRadius: 0, color: Colors.transparent),
-                ],
+          color: getColor,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [getBoxShadow],
         ),
         child: Center(
-            child: Text(
-          text,
-          style: TextStyle(color: isActive ? Colors.white : Colors.black54, fontSize: 12, fontWeight: FontWeight.bold),
-        )),
+          child: Text(
+            text,
+            style: getTextStyle,
+          ),
+        ),
       ),
     );
   }
+
+  TextStyle get getTextStyle => TextStyle(
+      color: isActive ? Colors.white : Colors.black54,
+      fontSize: 12,
+      fontWeight: FontWeight.bold);
+
+  Color get getColor =>
+      isActive ? const Color.fromARGB(255, 146, 0, 0) : Colors.white;
+
+  BoxShadow get getBoxShadow => isActive
+      ? BoxShadow(
+          color: const Color.fromARGB(255, 151, 0, 0).withOpacity(0.5),
+          spreadRadius: 1,
+          blurRadius: 4,
+          offset: const Offset(0, 1))
+      : const BoxShadow(spreadRadius: 0, color: Colors.transparent);
 }

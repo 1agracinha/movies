@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:movies/core/inject/controllers_injections.dart';
 import 'package:movies/core/inject/datasources_injections.dart';
 import 'package:movies/core/inject/infra_injections.dart';
 import 'package:movies/core/inject/repositories_injections.dart';
@@ -12,5 +13,6 @@ class Inject {
     registerDatasourcesDependencies(getIt);
     registerRepositoriesDependencies(getIt);
     registerInfraDependencies(getIt);
+    registerControllerDependencies(getIt);
   }
 }

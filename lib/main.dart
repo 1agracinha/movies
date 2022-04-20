@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/core/inject/inject_container.dart';
+import 'package:movies/core/utils/assets_constants.dart';
+import 'package:movies/core/utils/spacing_constants.dart';
 import 'package:movies/layers/presentation/home/home_page.dart';
 
 void main() async {
@@ -40,6 +42,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: HomePage()));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Center(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: mdSpacing, bottom: normalSpacing),
+              child: Image.asset(
+                ImageAssets.logo,
+                scale: 8,
+              ),
+            ),
+          ),
+        ),
+        body: SafeArea(child: HomePage()));
   }
 }
